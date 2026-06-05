@@ -19,14 +19,22 @@
     --accent-soft: #f1f5f9;
     --accent-ring: rgba(28, 25, 23, 0.12);
 
-    --d: #2563eb;
-    --d-bg: #eff6ff;
+    --d: #ec4899;
+    --d-bg: #fdf2f8;
     --e: #d97706;
     --e-bg: #fffbeb;
-    --off: #78716c;
-    --off-bg: #f5f5f4;
-    --b: #059669;
-    --b-bg: #ecfdf5;
+    --off: #6366f1;
+    --off-bg: #eef2ff;
+    --b: #1d4ed8;
+    --b-bg: #dbeafe;
+    --b-1: #3b82f6;
+    --b-1-bg: #dbeafe;
+    --b-2: #1d4ed8;
+    --b-2-bg: #bfdbfe;
+    --b-3: #1e3a8a;
+    --b-3-bg: #93c5fd;
+    --b-4: #dbeafe;
+    --b-4-bg: #1e3a8a;
     --holiday: #dc2626;
     --saturday: #2563eb;
     --memo: #f59e0b;
@@ -207,6 +215,10 @@
   .stripe-a.E { background: var(--e); }
   .stripe-a.OFF { background: var(--off); opacity: 0.5; }
   .stripe-b { background: var(--b); }
+  .stripe-b.B-1 { background: var(--b-1); }
+  .stripe-b.B-2 { background: var(--b-2); }
+  .stripe-b.B-3 { background: var(--b-3); }
+  .stripe-b.B-4 { background: var(--b-3); }
 
   .cell-body {
     flex: 1; display: flex; flex-direction: column;
@@ -251,6 +263,10 @@
   .sched.E { background: var(--e-bg); color: var(--e); }
   .sched.OFF { background: var(--off-bg); color: var(--off); }
   .sched.B { background: var(--b-bg); color: var(--b); }
+  .sched.B-1 { background: var(--b-1-bg); color: var(--b-1); }
+  .sched.B-2 { background: var(--b-2-bg); color: var(--b-2); }
+  .sched.B-3 { background: var(--b-3-bg); color: var(--b-3); }
+  .sched.B-4 { background: var(--b-4-bg); color: var(--b-4); }
 
   .memo-dot {
     position: absolute; bottom: 8px; right: 8px;
@@ -465,7 +481,7 @@
     <div class="brand-info">
       <div class="brand-row">
         <span class="brand-title">스케줄 공유</span>
-        <span class="pill" id="versionPill">v0.2.0</span>
+        <span class="pill" id="versionPill">v0.2.1</span>
       </div>
       <div class="brand-sub">A · 간호사 (D/E/Off) &nbsp;·&nbsp; B · 회사원 (특근/잔업)</div>
     </div>
@@ -556,13 +572,13 @@
 <footer>
   <div class="ver-pill">
     <span class="ver-dot"></span>
-    <span class="ver-tag" id="verTag">v0.2.0</span>
-    <span class="ver-note">· 입력 시스템 개선</span>
+    <span class="ver-tag" id="verTag">v0.2.1</span>
+    <span class="ver-note">· OFF 인디고, B 시간 레벨별 색상</span>
   </div>
 </footer>
 
 <script>
-const APP_VERSION = 'v0.2.0';
+const APP_VERSION = 'v0.2.1';
 
 const state = {
   year: 0, month: 0,
@@ -603,6 +619,12 @@ function parseKey(k) { const [y, m, d] = k.split('-').map(Number); return { y, m
 
 function daysInMonth(y, m) { return new Date(y, m+1, 0).getDate(); }
 function firstWeekday(y, m) { return new Date(y, m, 1).getDay(); }
+function bLevel(total) {
+  if (total <= 1.0) return 1;
+  if (total <= 2.5) return 2;
+  if (total <= 4.5) return 3;
+  return 4;
+}
 
 const HOLIDAYS = {
   2024: [['01-01','신정'],['02-09','설날'],['02-10','설날'],['02-11','설날'],['02-12','설날 대체'],['03-01','3·1절'],['05-05','어린이날'],['05-06','어린이날 대체'],['05-15','부처님오신날'],['06-06','현충일'],['08-15','광복절'],['09-16','추석'],['09-17','추석'],['09-18','추석'],['10-03','개천절'],['10-09','한글날'],['12-25','성탄절']],
@@ -674,7 +696,7 @@ function renderCalendar() {
         }
         if (showStripeB) {
           const s = document.createElement('div');
-          s.className = 'stripe-b';
+          s.className = 'stripe-b B-' + bLevel((+bData.special || 0) + (+bData.overtime || 0));
           stripes.appendChild(s);
         }
         cell.appendChild(stripes);
@@ -716,9 +738,10 @@ function renderCalendar() {
         if (bHas && state.filters.B) {
           const sp = +bData.special || 0;
           const ot = +bData.overtime || 0;
+          const total = sp + ot;
           const sched = document.createElement('span');
-          sched.className = 'sched B';
-          sched.textContent = `${sp + ot}h`;
+          sched.className = 'sched B-' + bLevel(total);
+          sched.textContent = `${parseFloat(total.toFixed(1))}h`;
           schedules.appendChild(sched);
         }
         if (schedules.childElementCount > 0) cb.appendChild(schedules);
