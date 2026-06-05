@@ -261,10 +261,19 @@
   .cal-cell .day.sun { color: var(--holiday); }
   .cal-cell .day.sat { color: var(--saturday); }
   .cal-cell .day.holiday { color: var(--holiday); }
-  .cal-cell .day.today-day { color: var(--accent); }
-  .cal-cell .day.sun.today-day,
-  .cal-cell .day.sat.today-day,
-  .cal-cell .day.holiday.today-day { color: var(--accent); }
+  .cal-cell .day.today-day {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
+  }
 
   .today-mark {
     width: 16px;
@@ -714,12 +723,12 @@
   <div class="ver-pill">
     <span class="ver-dot"></span>
     <span class="ver-tag" id="verTag">v0.0.1</span>
-    <span class="ver-note">· UI 리디자인</span>
+    <span class="ver-note">· Today 버튼 수정</span>
   </div>
 </footer>
 
 <script>
-const APP_VERSION = 'v0.1.0';
+const APP_VERSION = 'v0.1.1';
 
 const state = {
   year: 0, month: 0,
@@ -1086,14 +1095,16 @@ function navigate(direction) {
     const t = new Date();
     state.year = t.getFullYear();
     state.month = t.getMonth();
+    const todayKey = key(t.getFullYear(), t.getMonth(), t.getDate());
+    selectDate(todayKey);
   } else {
     state.month += direction;
     if (state.month > 11) { state.month = 0; state.year++; }
     if (state.month < 0) { state.month = 11; state.year--; }
+    state.selected = null;
+    showEmpty();
+    renderCalendar();
   }
-  state.selected = null;
-  showEmpty();
-  renderCalendar();
 }
 $('#prev').addEventListener('click', () => navigate(-1));
 $('#next').addEventListener('click', () => navigate(1));
