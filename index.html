@@ -38,10 +38,9 @@
     --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.03);
     --shadow-md: 0 1px 3px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.06);
-    --shadow-lg: 0 4px 8px rgba(0,0,0,0.04), 0 16px 40px rgba(0,0,0,0.08);
 
     --font: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", system-ui, sans-serif;
-    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Pretendard Mono", monospace;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   }
 
   * { box-sizing: border-box; }
@@ -54,7 +53,6 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: "ss01", "cv11";
   }
   button, input, textarea { font-family: inherit; }
 
@@ -73,147 +71,114 @@
     top: 0;
     z-index: 10;
   }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .brand { display: flex; align-items: center; gap: 12px; }
   .brand-mark {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
+    width: 32px; height: 32px; border-radius: 9px;
     background: linear-gradient(135deg, #1c1917 0%, #44403c 100%);
-    display: grid;
-    place-items: center;
-    color: white;
-    font-weight: 700;
-    font-size: 15px;
+    display: grid; place-items: center;
+    color: white; font-weight: 700; font-size: 15px;
     letter-spacing: -0.03em;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
   }
   .brand-info { display: flex; flex-direction: column; gap: 1px; }
   .brand-row { display: flex; align-items: center; gap: 8px; }
-  .brand-title {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--text);
-  }
-  .brand-sub {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.01em;
-  }
+  .brand-title { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+  .brand-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.01em; }
   .pill {
     font-family: var(--font-mono);
-    font-size: 10.5px;
-    font-weight: 500;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background: var(--surface-2);
-    color: var(--text-soft);
-    border: 1px solid var(--border);
-    letter-spacing: 0.02em;
+    font-size: 10.5px; font-weight: 500;
+    padding: 2px 8px; border-radius: 999px;
+    background: var(--surface-2); color: var(--text-soft);
+    border: 1px solid var(--border); letter-spacing: 0.02em;
   }
 
-  .nav {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-left: auto;
-  }
+  .nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
   .nav-btn {
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    padding: 7px 12px;
-    cursor: pointer;
-    font: inherit;
-    color: var(--text-soft);
+    background: transparent; border: 1px solid transparent;
+    border-radius: var(--radius-sm); padding: 7px 12px;
+    cursor: pointer; font: inherit; color: var(--text-soft);
     transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
     user-select: none;
   }
   .nav-btn:hover { background: var(--surface-2); color: var(--text); }
   .nav-btn:active { transform: scale(0.97); }
-  .nav-btn.icon {
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    display: grid;
-    place-items: center;
-    font-size: 16px;
-    line-height: 1;
-  }
+  .nav-btn.icon { width: 34px; height: 34px; padding: 0; display: grid; place-items: center; font-size: 16px; line-height: 1; }
   .nav-btn.primary {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-    font-weight: 500;
-    box-shadow: var(--shadow-xs);
+    background: var(--accent); color: white; border-color: var(--accent);
+    font-weight: 500; box-shadow: var(--shadow-xs);
   }
   .nav-btn.primary:hover { background: #000; color: white; }
   .nav-month {
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.015em;
-    min-width: 132px;
-    text-align: center;
-    margin: 0 6px;
-    color: var(--text);
-    font-variant-numeric: tabular-nums;
+    font-size: 16px; font-weight: 600; letter-spacing: -0.015em;
+    min-width: 132px; text-align: center; margin: 0 6px;
+    color: var(--text); font-variant-numeric: tabular-nums;
   }
 
   /* ============ Container ============ */
   .container {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 20px;
-    padding: 24px 28px 12px;
-    max-width: 1280px;
-    margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 340px;
+    gap: 20px; padding: 20px 28px 12px;
+    max-width: 1280px; margin: 0 auto;
   }
   @media (max-width: 920px) {
     .container { grid-template-columns: 1fr; padding: 16px; }
   }
 
+  /* ============ Filter Bar ============ */
+  .filter-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .filter-pills { display: flex; gap: 6px; }
+  .filter-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 999px; cursor: pointer; font: inherit;
+    color: var(--muted); font-size: 12.5px; font-weight: 500;
+    transition: all 0.15s ease;
+  }
+  .filter-btn:hover { background: var(--surface-2); color: var(--text); }
+  .filter-btn .filter-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .filter-btn .filter-dot.A { background: linear-gradient(135deg, var(--d) 0%, var(--e) 100%); }
+  .filter-btn .filter-dot.B { background: var(--b); }
+  .filter-btn.active { color: var(--text); border-color: var(--border-strong); }
+  .filter-btn.active .filter-dot { box-shadow: 0 0 0 2px var(--surface); }
+  .filter-btn:not(.active) { opacity: 0.55; }
+  .filter-btn:not(.active) .filter-dot { background: var(--muted-2); }
+  .filter-hint {
+    font-size: 11.5px; color: var(--muted); font-weight: 500;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .filter-hint kbd {
+    font-family: var(--font-mono); font-size: 10.5px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 5px; color: var(--text-soft);
+  }
+
   /* ============ Calendar ============ */
   .cal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
     box-shadow: var(--shadow-sm);
   }
-  .cal-head, .cal-row {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-  }
+  .cal-head, .cal-row { display: grid; grid-template-columns: repeat(7, 1fr); }
   .cal-head {
-    background: var(--surface-2);
-    font-weight: 600;
-    color: var(--muted);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    background: var(--surface-2); font-weight: 600; color: var(--muted);
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
     border-bottom: 1px solid var(--border);
   }
   .cal-head > div, .cal-cell { padding: 0; position: relative; }
-  .cal-head > div {
-    text-align: center;
-    padding: 11px 4px;
-  }
+  .cal-head > div { text-align: center; padding: 11px 4px; }
   .cal-head > div.sun { color: var(--holiday); }
   .cal-head > div.sat { color: var(--saturday); }
 
   .cal-cell {
-    min-height: 112px;
-    cursor: pointer;
+    min-height: 112px; cursor: pointer;
     border-right: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: background 0.15s ease, transform 0.08s ease;
+    display: flex; flex-direction: column; overflow: hidden;
+    transition: background 0.12s ease, transform 0.08s ease;
   }
   .cal-cell:nth-child(7n) { border-right: none; }
   .cal-cell:hover:not(.outside):not(.selected) { background: var(--surface-2); }
@@ -221,17 +186,22 @@
 
   .cal-cell.outside { background: #fcfbf9; cursor: default; }
   .cal-cell.outside > * { opacity: 0.32; }
+  .cal-cell.outside:hover { background: #fcfbf9; }
 
   .cal-cell.selected {
     background: var(--accent-soft);
     box-shadow: inset 0 0 0 2px var(--accent);
     z-index: 1;
   }
+  .cal-cell.selected:hover { background: var(--accent-soft); }
 
+  /* Stripes side-by-side */
+  .stripes {
+    display: flex; height: 3px; flex-shrink: 0;
+  }
   .stripe-a, .stripe-b {
-    height: 3px;
-    flex-shrink: 0;
-    transition: opacity 0.2s ease;
+    flex: 1; height: 100%;
+    transition: background 0.15s ease, opacity 0.2s ease;
   }
   .stripe-a.D { background: var(--d); }
   .stripe-a.E { background: var(--e); }
@@ -239,88 +209,42 @@
   .stripe-b { background: var(--b); }
 
   .cell-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 10px 11px 8px;
-    gap: 4px;
-    min-height: 0;
+    flex: 1; display: flex; flex-direction: column;
+    padding: 10px 11px 8px; gap: 4px; min-height: 0;
   }
-  .day-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
+  .day-row { display: flex; align-items: flex-start; justify-content: space-between; }
   .cal-cell .day {
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 600; font-size: 15px;
     letter-spacing: -0.01em;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
+    font-variant-numeric: tabular-nums; line-height: 1;
   }
   .cal-cell .day.sun { color: var(--holiday); }
   .cal-cell .day.sat { color: var(--saturday); }
   .cal-cell .day.holiday { color: var(--holiday); }
   .cal-cell .day.today-day {
-    display: inline-grid;
-    place-items: center;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: white;
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0;
+    display: inline-grid; place-items: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--accent); color: white;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0;
     box-shadow: 0 1px 2px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12);
   }
 
-  .today-mark {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: white;
-    font-size: 9px;
-    font-weight: 700;
-    display: grid;
-    place-items: center;
-    letter-spacing: 0;
-    margin-top: -2px;
-  }
-
   .holiday-name {
-    font-size: 10.5px;
-    color: var(--holiday);
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    line-height: 1.25;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 10.5px; color: var(--holiday); font-weight: 600;
+    letter-spacing: 0.01em; line-height: 1.25;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
   .schedules {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    align-items: flex-start;
+    margin-top: auto; display: flex; flex-direction: column;
+    gap: 3px; align-items: flex-start;
   }
   .sched {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 7px;
-    border-radius: 5px;
-    font-size: 10.5px;
-    font-weight: 600;
-    line-height: 1.4;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    letter-spacing: 0.02em;
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 7px; border-radius: 5px;
+    font-size: 10.5px; font-weight: 600; line-height: 1.4;
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap; letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
   }
   .sched.D { background: var(--d-bg); color: var(--d); }
@@ -329,12 +253,8 @@
   .sched.B { background: var(--b-bg); color: var(--b); }
 
   .memo-dot {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+    position: absolute; bottom: 8px; right: 8px;
+    width: 5px; height: 5px; border-radius: 50%;
     background: var(--memo);
     box-shadow: 0 0 0 2px var(--surface);
   }
@@ -343,119 +263,80 @@
 
   /* ============ Panel ============ */
   .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    height: fit-content;
-    position: sticky;
-    top: 84px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px;
+    height: fit-content; position: sticky; top: 84px;
     box-shadow: var(--shadow-sm);
   }
-  .panel-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 4px;
-  }
-  .panel h2 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    color: var(--text);
-  }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+  .panel h2 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+  .panel h2.batch { color: var(--accent); }
   .panel-date-badge {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--muted);
-    background: var(--surface-2);
-    padding: 2px 8px;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    font-weight: 500;
+    font-family: var(--font-mono); font-size: 10.5px;
+    color: var(--muted); background: var(--surface-2);
+    padding: 2px 8px; border-radius: 999px;
+    border: 1px solid var(--border); font-weight: 500;
+  }
+  .panel-date-badge.batch {
+    color: white; background: var(--accent);
+    border-color: var(--accent);
   }
   .panel .sub {
-    color: var(--muted);
-    font-size: 12px;
-    margin: 0 0 18px;
-    line-height: 1.5;
+    color: var(--muted); font-size: 12px;
+    margin: 0 0 18px; line-height: 1.5;
   }
-  .panel .sub.holiday {
-    color: var(--holiday);
-    font-weight: 500;
-  }
+  .panel .sub.holiday { color: var(--holiday); font-weight: 500; }
+  .panel .sub.batch { color: var(--accent); font-weight: 500; }
 
-  .empty-state {
-    text-align: center;
-    padding: 28px 0 12px;
+  .batch-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px; color: var(--text-soft);
   }
+  .batch-actions .batch-label { font-weight: 500; }
+  .batch-actions .clear-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font: inherit; font-size: 11.5px;
+    padding: 2px 6px; border-radius: 4px;
+  }
+  .batch-actions .clear-btn:hover { color: var(--text); background: var(--surface); }
+
+  .empty-state { text-align: center; padding: 28px 0 12px; }
   .empty-icon {
-    width: 44px;
-    height: 44px;
-    margin: 0 auto 14px;
+    width: 44px; height: 44px; margin: 0 auto 14px;
     border-radius: 12px;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    display: grid;
-    place-items: center;
-    color: var(--muted-2);
+    background: var(--surface-2); border: 1px solid var(--border);
+    display: grid; place-items: center; color: var(--muted-2);
   }
-  .empty-state .empty-text {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .empty-state .empty-hint {
-    font-size: 11px;
-    color: var(--muted-2);
-    margin-top: 4px;
-  }
+  .empty-state .empty-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .empty-state .empty-hint { font-size: 11px; color: var(--muted-2); margin-top: 4px; }
 
   .field { margin-bottom: 18px; }
   .field-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    display: flex; align-items: center; gap: 6px;
+    font-weight: 600; margin-bottom: 8px;
+    font-size: 11px; color: var(--muted);
+    letter-spacing: 0.04em; text-transform: uppercase;
   }
-  .field-label .role-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-  }
+  .field-label .role-dot { width: 7px; height: 7px; border-radius: 50%; }
   .field-label .role-dot.D { background: var(--d); }
   .field-label .role-dot.E { background: var(--e); }
   .field-label .role-dot.OFF { background: var(--off); }
   .field-label .role-dot.B { background: var(--b); }
 
   .seg {
-    display: flex;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 3px;
-    gap: 2px;
+    display: flex; background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 3px; gap: 2px;
   }
   .seg button {
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-radius: 7px;
-    padding: 8px 6px;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 600;
-    color: var(--muted);
-    transition: all 0.18s ease;
-    font-size: 12.5px;
-    letter-spacing: 0.01em;
+    flex: 1; background: transparent; border: none;
+    border-radius: 7px; padding: 8px 6px; cursor: pointer;
+    font: inherit; font-weight: 600; color: var(--muted);
+    transition: all 0.18s ease; font-size: 12.5px; letter-spacing: 0.01em;
   }
   .seg button:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.04); }
   .seg button.active { color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
@@ -467,52 +348,29 @@
   .row-2 .field { flex: 1; }
 
   input[type="number"], textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    font: inherit;
-    font-variant-numeric: tabular-nums;
-    background: var(--surface);
-    color: var(--text);
+    width: 100%; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px 12px;
+    font: inherit; font-variant-numeric: tabular-nums;
+    background: var(--surface); color: var(--text);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   input[type="number"]:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent);
+    outline: none; border-color: var(--accent);
     box-shadow: 0 0 0 3px var(--accent-ring);
   }
-  textarea {
-    min-height: 88px;
-    resize: vertical;
-    line-height: 1.5;
-  }
+  textarea { min-height: 88px; resize: vertical; line-height: 1.5; }
   input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   input[type="number"] { -moz-appearance: textfield; }
 
   .save-status {
-    font-size: 11px;
-    text-align: right;
-    margin-top: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 6px;
-    color: var(--muted);
-    transition: color 0.2s ease;
+    font-size: 11px; text-align: right; margin-top: 2px;
+    display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+    color: var(--muted); transition: color 0.2s ease;
   }
   .save-status.saving { color: var(--e); }
   .save-status.saved { color: var(--b); }
-  .save-status .save-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: currentColor;
-  }
+  .save-status .save-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
   .save-status.saving .save-dot { animation: pulse 1.2s ease-in-out infinite; }
   @keyframes pulse {
     0%, 100% { opacity: 1; }
@@ -520,112 +378,68 @@
   }
 
   .summary {
-    margin-top: 20px;
-    padding-top: 18px;
+    margin-top: 20px; padding-top: 18px;
     border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    display: flex; flex-direction: column; gap: 16px;
   }
   .summary-block .summary-title {
-    font-size: 10.5px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+    font-size: 10.5px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
   }
-  .summary-title .role-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-  }
+  .summary-title .role-dot { width: 6px; height: 6px; border-radius: 50%; }
   .summary-title .role-dot.A { background: linear-gradient(135deg, var(--d) 0%, var(--e) 100%); }
   .summary-title .role-dot.B { background: var(--b); }
-  .summary-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
+  .summary-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .summary-stats.two { grid-template-columns: repeat(2, 1fr); }
   .summary-stats.one { grid-template-columns: 1fr; }
   .summary-stat {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 10px 12px;
+    display: flex; flex-direction: column; gap: 2px;
   }
   .summary-stat .val {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    font-size: 18px; font-weight: 600; color: var(--text);
+    letter-spacing: -0.02em; line-height: 1.1;
     font-variant-numeric: tabular-nums;
   }
   .summary-stat .lbl {
-    font-size: 10.5px;
-    color: var(--muted);
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    font-size: 10.5px; color: var(--muted);
+    font-weight: 500; letter-spacing: 0.02em;
   }
   .summary-stat .val .unit {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    margin-left: 1px;
+    font-size: 12px; font-weight: 500;
+    color: var(--muted); margin-left: 1px;
   }
 
   /* ============ Footer ============ */
   footer {
-    text-align: center;
-    padding: 12px 24px 28px;
-    color: var(--muted);
-    font-size: 12px;
+    text-align: center; padding: 12px 24px 28px;
+    color: var(--muted); font-size: 12px;
   }
   .ver-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-soft);
-    font-weight: 500;
-    font-size: 12px;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 5px 12px; border-radius: 999px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-soft); font-weight: 500; font-size: 12px;
     box-shadow: var(--shadow-xs);
   }
   .ver-pill .ver-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--b);
-    box-shadow: 0 0 0 2px var(--b-bg);
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--b); box-shadow: 0 0 0 2px var(--b-bg);
   }
   .ver-pill .ver-tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text);
-    font-weight: 600;
-    letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--text); font-weight: 600; letter-spacing: 0.02em;
   }
   .ver-pill .ver-note { color: var(--muted); }
 
-  /* ============ Animations ============ */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(2px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .cal-cell { animation: fadeIn 0.2s ease both; }
+  .cal-cell { animation: fadeIn 0.18s ease both; }
 
-  /* ============ Mobile tweaks ============ */
   @media (max-width: 920px) {
     .cal-cell { min-height: 84px; }
     .cell-body { padding: 8px 8px 6px; }
@@ -640,6 +454,7 @@
     .nav-month { min-width: 100px; font-size: 14px; }
     .nav-btn.icon { width: 30px; height: 30px; font-size: 14px; }
     .panel { position: static; }
+    .filter-hint { display: none; }
   }
 </style>
 </head>
@@ -650,7 +465,7 @@
     <div class="brand-info">
       <div class="brand-row">
         <span class="brand-title">스케줄 공유</span>
-        <span class="pill" id="versionPill">v0.0.1</span>
+        <span class="pill" id="versionPill">v0.2.0</span>
       </div>
       <div class="brand-sub">A · 간호사 (D/E/Off) &nbsp;·&nbsp; B · 회사원 (특근/잔업)</div>
     </div>
@@ -664,11 +479,26 @@
 </header>
 
 <div class="container">
-  <div class="cal" id="cal">
-    <div class="cal-head">
-      <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
+  <div class="left-col">
+    <div class="filter-bar">
+      <div class="filter-pills">
+        <button class="filter-btn active" data-filter="A" type="button">
+          <span class="filter-dot A"></span>A · 간호사
+        </button>
+        <button class="filter-btn active" data-filter="B" type="button">
+          <span class="filter-dot B"></span>B · 회사원
+        </button>
+      </div>
+      <div class="filter-hint">
+        <kbd>D</kbd> <kbd>E</kbd> <kbd>/</kbd> 키 입력 · <kbd>Esc</kbd> 해제
+      </div>
     </div>
-    <div id="calBody"></div>
+    <div class="cal" id="cal">
+      <div class="cal-head">
+        <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
+      </div>
+      <div id="calBody"></div>
+    </div>
   </div>
   <aside class="panel" id="panel">
     <div id="panelEmpty">
@@ -682,24 +512,28 @@
           </svg>
         </div>
         <div class="empty-text">달력에서 날짜를 클릭해<br>스케줄을 기록하세요</div>
-        <div class="empty-hint">A의 근무 · B의 시간 · 메모</div>
+        <div class="empty-hint">여러 날 클릭 후 D / E / / 키로 일괄 입력</div>
       </div>
     </div>
     <div id="panelFilled" style="display:none;">
       <div class="panel-head">
-        <h2 id="panelTitle"></h2>
-        <span class="panel-date-badge" id="panelDateBadge"></span>
+        <h2 id="panelTitle">6월 5일</h2>
+        <span class="panel-date-badge" id="panelDateBadge">금요일</span>
       </div>
-      <div class="sub" id="panelSub"></div>
-      <div class="field">
+      <div class="sub" id="panelSub">선택한 날짜의 스케줄을 편집하세요</div>
+      <div class="batch-actions" id="batchActions" style="display:none;">
+        <span class="batch-label" id="batchLabel">3일 선택됨</span>
+        <button class="clear-btn" id="clearSelection" type="button">해제</button>
+      </div>
+      <div class="field" id="fieldA">
         <div class="field-label"><span class="role-dot D"></span>A · 간호사 근무</div>
         <div class="seg" id="segA">
-          <button data-v="D">D · Day</button>
-          <button data-v="E">E · Evening</button>
-          <button data-v="/">/ · Off</button>
+          <button data-v="D" type="button">D · Day</button>
+          <button data-v="E" type="button">E · Evening</button>
+          <button data-v="/" type="button">/ · Off</button>
         </div>
       </div>
-      <div class="row-2">
+      <div class="row-2" id="fieldB">
         <div class="field">
           <div class="field-label"><span class="role-dot B"></span>B 특근 (h)</div>
           <input type="number" id="bSpecial" min="0" step="0.5" placeholder="0">
@@ -709,7 +543,7 @@
           <input type="number" id="bOvertime" min="0" step="0.5" placeholder="0">
         </div>
       </div>
-      <div class="field">
+      <div class="field" id="fieldMemo">
         <div class="field-label">메모</div>
         <textarea id="memo" placeholder="이 날에 남길 메모..."></textarea>
       </div>
@@ -722,19 +556,22 @@
 <footer>
   <div class="ver-pill">
     <span class="ver-dot"></span>
-    <span class="ver-tag" id="verTag">v0.0.1</span>
-    <span class="ver-note">· Today 버튼 수정</span>
+    <span class="ver-tag" id="verTag">v0.2.0</span>
+    <span class="ver-note">· 입력 시스템 개선</span>
   </div>
 </footer>
 
 <script>
-const APP_VERSION = 'v0.1.1';
+const APP_VERSION = 'v0.2.0';
 
 const state = {
   year: 0, month: 0,
   a: {}, b: {}, messages: {},
-  selected: null,
+  primary: null,
+  selection: new Set(),
+  filters: { A: true, B: true },
 };
+const dirty = { a: false, special: false, overtime: false, memo: false };
 
 document.getElementById('versionPill').textContent = APP_VERSION;
 document.getElementById('verTag').textContent = APP_VERSION;
@@ -768,70 +605,11 @@ function daysInMonth(y, m) { return new Date(y, m+1, 0).getDate(); }
 function firstWeekday(y, m) { return new Date(y, m, 1).getDay(); }
 
 const HOLIDAYS = {
-  2024: [
-    ['01-01','신정'],
-    ['02-09','설날'],['02-10','설날'],['02-11','설날'],['02-12','설날 대체'],
-    ['03-01','3·1절'],
-    ['05-05','어린이날'],['05-06','어린이날 대체'],
-    ['05-15','부처님오신날'],
-    ['06-06','현충일'],
-    ['08-15','광복절'],
-    ['09-16','추석'],['09-17','추석'],['09-18','추석'],
-    ['10-03','개천절'],
-    ['10-09','한글날'],
-    ['12-25','성탄절'],
-  ],
-  2025: [
-    ['01-01','신정'],
-    ['01-28','설날'],['01-29','설날'],['01-30','설날'],
-    ['03-01','3·1절'],
-    ['05-05','어린이날'],['05-05','부처님오신날'],['05-06','대체공휴일'],
-    ['06-06','현충일'],
-    ['08-15','광복절'],
-    ['10-03','개천절'],
-    ['10-06','추석'],['10-07','추석'],['10-08','추석'],
-    ['10-09','한글날'],
-    ['12-25','성탄절'],
-  ],
-  2026: [
-    ['01-01','신정'],
-    ['02-16','설날'],['02-17','설날'],['02-18','설날'],
-    ['03-01','3·1절'],['03-02','3·1절 대체'],
-    ['05-05','어린이날'],
-    ['05-24','부처님오신날'],['05-25','부처님오신날 대체'],
-    ['06-06','현충일'],
-    ['08-15','광복절'],['08-17','광복절 대체'],
-    ['09-24','추석'],['09-25','추석'],['09-26','추석'],
-    ['10-03','개천절'],['10-05','개천절 대체'],
-    ['10-09','한글날'],
-    ['12-25','성탄절'],
-  ],
-  2027: [
-    ['01-01','신정'],
-    ['02-05','설날'],['02-06','설날'],['02-07','설날'],['02-08','설날 대체'],
-    ['03-01','3·1절'],
-    ['05-05','어린이날'],
-    ['05-13','부처님오신날'],
-    ['06-06','현충일'],['06-07','현충일 대체'],
-    ['08-15','광복절'],['08-16','광복절 대체'],
-    ['09-15','추석'],['09-16','추석'],['09-17','추석'],
-    ['10-03','개천절'],['10-04','개천절 대체'],
-    ['10-09','한글날'],
-    ['12-25','성탄절'],
-  ],
-  2028: [
-    ['01-01','신정'],
-    ['01-26','설날'],['01-27','설날'],['01-28','설날'],
-    ['03-01','3·1절'],
-    ['05-02','부처님오신날'],
-    ['05-05','어린이날'],
-    ['06-06','현충일'],
-    ['08-15','광복절'],
-    ['10-03','개천절'],
-    ['10-04','추석'],['10-05','추석'],['10-06','추석'],
-    ['10-09','한글날'],
-    ['12-25','성탄절'],
-  ],
+  2024: [['01-01','신정'],['02-09','설날'],['02-10','설날'],['02-11','설날'],['02-12','설날 대체'],['03-01','3·1절'],['05-05','어린이날'],['05-06','어린이날 대체'],['05-15','부처님오신날'],['06-06','현충일'],['08-15','광복절'],['09-16','추석'],['09-17','추석'],['09-18','추석'],['10-03','개천절'],['10-09','한글날'],['12-25','성탄절']],
+  2025: [['01-01','신정'],['01-28','설날'],['01-29','설날'],['01-30','설날'],['03-01','3·1절'],['05-05','어린이날'],['05-05','부처님오신날'],['05-06','대체공휴일'],['06-06','현충일'],['08-15','광복절'],['10-03','개천절'],['10-06','추석'],['10-07','추석'],['10-08','추석'],['10-09','한글날'],['12-25','성탄절']],
+  2026: [['01-01','신정'],['02-16','설날'],['02-17','설날'],['02-18','설날'],['03-01','3·1절'],['03-02','3·1절 대체'],['05-05','어린이날'],['05-24','부처님오신날'],['05-25','부처님오신날 대체'],['06-06','현충일'],['08-15','광복절'],['08-17','광복절 대체'],['09-24','추석'],['09-25','추석'],['09-26','추석'],['10-03','개천절'],['10-05','개천절 대체'],['10-09','한글날'],['12-25','성탄절']],
+  2027: [['01-01','신정'],['02-05','설날'],['02-06','설날'],['02-07','설날'],['02-08','설날 대체'],['03-01','3·1절'],['05-05','어린이날'],['05-13','부처님오신날'],['06-06','현충일'],['06-07','현충일 대체'],['08-15','광복절'],['08-16','광복절 대체'],['09-15','추석'],['09-16','추석'],['09-17','추석'],['10-03','개천절'],['10-04','개천절 대체'],['10-09','한글날'],['12-25','성탄절']],
+  2028: [['01-01','신정'],['01-26','설날'],['01-27','설날'],['01-28','설날'],['03-01','3·1절'],['05-02','부처님오신날'],['05-05','어린이날'],['06-06','현충일'],['08-15','광복절'],['10-03','개천절'],['10-04','추석'],['10-05','추석'],['10-06','추석'],['10-09','한글날'],['12-25','성탄절']],
 };
 
 function getHolidayNames(y, m, d) {
@@ -876,7 +654,7 @@ function renderCalendar() {
       const k = key(c.y, c.m, c.d);
       const isToday = k === todayKey;
       if (isToday) cell.classList.add('today');
-      if (k === state.selected) cell.classList.add('selected');
+      if (state.selection.has(k)) cell.classList.add('selected');
 
       const dow = new Date(c.y, c.m, c.d).getDay();
       const holidays = getHolidayNames(c.y, c.m, c.d);
@@ -884,15 +662,22 @@ function renderCalendar() {
       const bData = state.b[k];
       const bHas = bData && ((+bData.special) > 0 || (+bData.overtime) > 0);
 
-      if (!c.outside && (a === 'D' || a === 'E' || a === '/')) {
-        const s = document.createElement('div');
-        s.className = 'stripe-a ' + a;
-        cell.appendChild(s);
-      }
-      if (!c.outside && bHas) {
-        const s = document.createElement('div');
-        s.className = 'stripe-b';
-        cell.appendChild(s);
+      const showStripeA = !c.outside && (a === 'D' || a === 'E' || a === '/') && state.filters.A;
+      const showStripeB = !c.outside && bHas && state.filters.B;
+      if (showStripeA || showStripeB) {
+        const stripes = document.createElement('div');
+        stripes.className = 'stripes';
+        if (showStripeA) {
+          const s = document.createElement('div');
+          s.className = 'stripe-a ' + a;
+          stripes.appendChild(s);
+        }
+        if (showStripeB) {
+          const s = document.createElement('div');
+          s.className = 'stripe-b';
+          stripes.appendChild(s);
+        }
+        cell.appendChild(stripes);
       }
 
       const cb = document.createElement('div');
@@ -922,13 +707,13 @@ function renderCalendar() {
       if (!c.outside) {
         const schedules = document.createElement('div');
         schedules.className = 'schedules';
-        if (a === 'D' || a === 'E' || a === '/') {
+        if ((a === 'D' || a === 'E' || a === '/') && state.filters.A) {
           const sched = document.createElement('span');
           sched.className = 'sched ' + (a === '/' ? 'OFF' : a);
           sched.textContent = a === '/' ? 'OFF' : a;
           schedules.appendChild(sched);
         }
-        if (bHas) {
+        if (bHas && state.filters.B) {
           const sp = +bData.special || 0;
           const ot = +bData.overtime || 0;
           const sched = document.createElement('span');
@@ -944,7 +729,7 @@ function renderCalendar() {
           dot.title = state.messages[k];
           cell.appendChild(dot);
         }
-        cell.addEventListener('click', () => selectDate(k));
+        cell.addEventListener('click', () => selectCell(k));
       }
 
       row.appendChild(cell);
@@ -976,29 +761,38 @@ function renderSummary() {
   for (const k in state.messages) {
     if (k.startsWith(km) && state.messages[k] && state.messages[k].trim()) memoCount++;
   }
-  $('#summary').innerHTML = `
-    <div class="summary-block">
-      <div class="summary-title"><span class="role-dot A"></span>A · 간호사</div>
-      <div class="summary-stats">
-        ${stat(dCount, 'D')}
-        ${stat(eCount, 'E')}
-        ${stat(offCount, 'Off')}
-      </div>
-    </div>
-    <div class="summary-block">
-      <div class="summary-title"><span class="role-dot B"></span>B · 회사원</div>
-      <div class="summary-stats two">
-        ${stat(specialSum, '특근', 'h')}
-        ${stat(overtimeSum, '잔업', 'h')}
-      </div>
-    </div>
+  const showA = state.filters.A;
+  const showB = state.filters.B;
+  let html = '';
+  if (showA) {
+    html += `
+      <div class="summary-block">
+        <div class="summary-title"><span class="role-dot A"></span>A · 간호사</div>
+        <div class="summary-stats">
+          ${stat(dCount, 'D')}
+          ${stat(eCount, 'E')}
+          ${stat(offCount, 'Off')}
+        </div>
+      </div>`;
+  }
+  if (showB) {
+    html += `
+      <div class="summary-block">
+        <div class="summary-title"><span class="role-dot B"></span>B · 회사원</div>
+        <div class="summary-stats two">
+          ${stat(specialSum, '특근', 'h')}
+          ${stat(overtimeSum, '잔업', 'h')}
+        </div>
+      </div>`;
+  }
+  html += `
     <div class="summary-block">
       <div class="summary-title">메모</div>
       <div class="summary-stats one">
-        ${stat(memoCount, memoCount === 1 ? '개' : '개')}
+        ${stat(memoCount, '개')}
       </div>
-    </div>
-  `;
+    </div>`;
+  $('#summary').innerHTML = html;
 }
 
 function setSaveStatus(state, text) {
@@ -1018,17 +812,52 @@ function showFilled() {
   $('#panelFilled').style.display = '';
 }
 
-function selectDate(k) {
-  state.selected = k;
+function populatePanel() {
+  const n = state.selection.size;
+  if (n === 0) { showEmpty(); return; }
+  showFilled();
+
+  const k = state.primary;
   const { y, m, d } = parseKey(k);
   const dt = new Date(y, m, d);
   const wk = ['일','월','화','수','목','금','토'][dt.getDay()];
-  $('#panelTitle').textContent = `${m+1}월 ${d}일`;
-  $('#panelDateBadge').textContent = `${wk}요일`;
+  const isBatch = n > 1;
+
+  const titleEl = $('#panelTitle');
+  const badgeEl = $('#panelDateBadge');
+  const subEl = $('#panelSub');
+
+  if (isBatch) {
+    titleEl.textContent = `${n}일 선택됨`;
+    titleEl.classList.add('batch');
+    badgeEl.textContent = '일괄 적용';
+    badgeEl.classList.add('batch');
+    $('#batchActions').style.display = '';
+    $('#batchLabel').textContent = `선택한 ${n}일 모두에 변경 적용`;
+  } else {
+    titleEl.textContent = `${m+1}월 ${d}일`;
+    titleEl.classList.remove('batch');
+    badgeEl.textContent = `${wk}요일`;
+    badgeEl.classList.remove('batch');
+    $('#batchActions').style.display = 'none';
+  }
+
   const holidays = getHolidayNames(y, m, d);
-  $('#panelSub').textContent = holidays.length ? '공휴일 · ' + holidays.join(', ') : '선택한 날짜의 스케줄을 편집하세요';
-  $('#panelSub').classList.toggle('holiday', holidays.length > 0);
-  showFilled();
+  if (holidays.length) {
+    subEl.textContent = '공휴일 · ' + holidays.join(', ');
+    subEl.classList.add('holiday');
+    subEl.classList.remove('batch');
+  } else if (isBatch) {
+    subEl.textContent = 'A · B 입력은 모두에 적용. 메모는 첫 번째 날에만.';
+    subEl.classList.add('batch');
+    subEl.classList.remove('holiday');
+  } else {
+    subEl.textContent = '선택한 날짜의 스케줄을 편집하세요';
+    subEl.classList.remove('holiday', 'batch');
+  }
+
+  $('#fieldA').style.display = state.filters.A ? '' : 'none';
+  $('#fieldB').style.display = state.filters.B ? '' : 'none';
 
   $$('#segA button').forEach(btn => btn.classList.remove('active', 'D', 'E', 'OFF'));
   const av = state.a[k];
@@ -1038,34 +867,109 @@ function selectDate(k) {
   }
   $('#bSpecial').value = (state.b[k] && state.b[k].special) || '';
   $('#bOvertime').value = (state.b[k] && state.b[k].overtime) || '';
-  $('#memo').value = state.messages[k] || '';
-  setSaveStatus('saved', '저장됨');
 
+  if (isBatch) {
+    $('#fieldMemo').style.display = 'none';
+  } else {
+    $('#fieldMemo').style.display = '';
+    $('#memo').value = state.messages[k] || '';
+  }
+
+  setSaveStatus('saved', '저장됨');
+}
+
+function markClean() {
+  dirty.a = false;
+  dirty.special = false;
+  dirty.overtime = false;
+  dirty.memo = false;
+}
+
+function selectCell(k) {
+  if (state.selection.has(k)) {
+    state.selection.delete(k);
+    if (state.primary === k) {
+      const last = Array.from(state.selection).pop();
+      state.primary = last || null;
+    }
+  } else {
+    state.selection.add(k);
+    state.primary = k;
+  }
+  markClean();
+  populatePanel();
   renderCalendar();
+}
+
+function clearSelection() {
+  if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; save(); }
+  state.selection.clear();
+  state.primary = null;
+  markClean();
+  showEmpty();
+  renderCalendar();
+}
+
+function applyShift(v) {
+  if (state.selection.size === 0) return;
+  for (const k of state.selection) {
+    state.a[k] = v;
+  }
+  $$('#segA button').forEach(b => b.classList.remove('active', 'D', 'E', 'OFF'));
+  const btn = $(`#segA button[data-v="${v}"]`);
+  if (btn) btn.classList.add('active', v === '/' ? 'OFF' : v);
+  dirty.a = true;
+  scheduleSave();
+}
+
+function toggleFilter(role) {
+  state.filters[role] = !state.filters[role];
+  $$(`.filter-btn[data-filter="${role}"]`).forEach(b => {
+    b.classList.toggle('active', state.filters[role]);
+  });
+  renderCalendar();
+  if (state.primary) populatePanel();
 }
 
 let saveTimer = null;
 function scheduleSave() {
+  if (state.selection.size === 0) return;
   setSaveStatus('saving', '저장 중...');
   clearTimeout(saveTimer);
   saveTimer = setTimeout(save, 400);
 }
 
 async function save() {
-  if (!state.selected) return;
-  const k = state.selected;
-  const active = $('#segA button.active');
-  const av = active ? active.dataset.v : null;
-  const sp = $('#bSpecial').value;
-  const ot = $('#bOvertime').value;
-  const memo = $('#memo').value;
+  saveTimer = null;
+  if (state.selection.size === 0) return;
+  if (!dirty.a && !dirty.special && !dirty.overtime && !dirty.memo) return;
 
-  if (av) state.a[k] = av; else delete state.a[k];
-  if (sp || ot) state.b[k] = { special: sp ? +sp : 0, overtime: ot ? +ot : 0 };
-  else delete state.b[k];
-  if (memo && memo.trim()) state.messages[k] = memo;
-  else delete state.messages[k];
+  for (const k of state.selection) {
+    if (dirty.a) {
+      const active = $('#segA button.active');
+      const av = active ? active.dataset.v : null;
+      if (av) state.a[k] = av; else delete state.a[k];
+    }
+    if (dirty.special || dirty.overtime) {
+      const existing = state.b[k] || {};
+      const sp = dirty.special
+        ? ($('#bSpecial').value === '' ? 0 : +$('#bSpecial').value)
+        : (+existing.special || 0);
+      const ot = dirty.overtime
+        ? ($('#bOvertime').value === '' ? 0 : +$('#bOvertime').value)
+        : (+existing.overtime || 0);
+      if (sp || ot) state.b[k] = { special: sp, overtime: ot };
+      else delete state.b[k];
+    }
+    if (dirty.memo && state.selection.size === 1) {
+      const memo = $('#memo').value;
+      if (memo && memo.trim()) state.messages[k] = memo;
+      else delete state.messages[k];
+    }
+  }
 
+  markClean();
+  setSaveStatus('saving', '저장 중...');
   try {
     await Promise.all([
       api('PUT', '/api/a', state.a),
@@ -1080,28 +984,44 @@ async function save() {
 }
 
 $('#segA').addEventListener('click', (e) => {
-  if (e.target.tagName !== 'BUTTON') return;
-  const v = e.target.dataset.v;
+  const btn = e.target.closest('button');
+  if (!btn) return;
+  const v = btn.dataset.v;
   $$('#segA button').forEach(b => b.classList.remove('active', 'D', 'E', 'OFF'));
-  e.target.classList.add('active', v === '/' ? 'OFF' : v);
+  btn.classList.add('active', v === '/' ? 'OFF' : v);
+  dirty.a = true;
   scheduleSave();
 });
-['bSpecial', 'bOvertime', 'memo'].forEach(id => {
-  $('#' + id).addEventListener('input', scheduleSave);
+$('#bSpecial').addEventListener('input', () => { dirty.special = true; scheduleSave(); });
+$('#bOvertime').addEventListener('input', () => { dirty.overtime = true; scheduleSave(); });
+$('#memo').addEventListener('input', () => { dirty.memo = true; scheduleSave(); });
+
+$('#clearSelection').addEventListener('click', clearSelection);
+
+$$('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => toggleFilter(btn.dataset.filter));
 });
 
 function navigate(direction) {
+  if (saveTimer) { clearTimeout(saveTimer); saveTimer = null; save(); }
   if (direction === 'today') {
     const t = new Date();
     state.year = t.getFullYear();
     state.month = t.getMonth();
     const todayKey = key(t.getFullYear(), t.getMonth(), t.getDate());
-    selectDate(todayKey);
+    state.selection.clear();
+    state.selection.add(todayKey);
+    state.primary = todayKey;
+    markClean();
+    populatePanel();
+    renderCalendar();
   } else {
     state.month += direction;
     if (state.month > 11) { state.month = 0; state.year++; }
     if (state.month < 0) { state.month = 11; state.year--; }
-    state.selected = null;
+    state.selection.clear();
+    state.primary = null;
+    markClean();
     showEmpty();
     renderCalendar();
   }
@@ -1112,9 +1032,20 @@ $('#today').addEventListener('click', () => navigate('today'));
 
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  if (e.key === 'ArrowLeft') navigate(-1);
-  else if (e.key === 'ArrowRight') navigate(1);
-  else if (e.key === 't' || e.key === 'T') navigate('today');
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+  if (e.key === 'ArrowLeft') { navigate(-1); e.preventDefault(); return; }
+  if (e.key === 'ArrowRight') { navigate(1); e.preventDefault(); return; }
+  if (e.key === 't' || e.key === 'T') { navigate('today'); e.preventDefault(); return; }
+  if (e.key === 'Escape') { clearSelection(); e.preventDefault(); return; }
+
+  if (state.selection.size > 0) {
+    let v = null;
+    if (e.key === 'd' || e.key === 'D') v = 'D';
+    else if (e.key === 'e' || e.key === 'E') v = 'E';
+    else if (e.key === '/') v = '/';
+    if (v) { applyShift(v); e.preventDefault(); }
+  }
 });
 
 (async function init() {

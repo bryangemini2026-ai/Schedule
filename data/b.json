@@ -1,1 +1,82 @@
-{}
+{
+  "2026-06-01": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-02": {
+    "special": 0,
+    "overtime": 0
+  },
+  "2026-06-04": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-08": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-09": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-10": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-11": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-12": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-13": {
+    "special": 0,
+    "overtime": 4.5
+  },
+  "2026-06-15": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-16": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-17": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-18": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-22": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-24": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-23": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-25": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-26": {
+    "special": 0,
+    "overtime": 1
+  },
+  "2026-06-29": {
+    "special": 0,
+    "overtime": 2.5
+  },
+  "2026-06-30": {
+    "special": 0,
+    "overtime": 2.5
+  }
+}
