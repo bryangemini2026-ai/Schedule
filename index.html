@@ -6,276 +6,729 @@
 <title>스케줄 공유</title>
 <style>
   :root {
-    --bg: #f7f7f8;
-    --card: #ffffff;
-    --border: #e5e7eb;
-    --text: #111827;
-    --muted: #6b7280;
-    --accent: #2563eb;
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --surface-2: #f5f5f4;
+    --border: #ebe9e6;
+    --border-strong: #d6d3d1;
+    --text: #1c1917;
+    --text-soft: #44403c;
+    --muted: #78716c;
+    --muted-2: #a8a29e;
+    --accent: #1c1917;
+    --accent-soft: #f1f5f9;
+    --accent-ring: rgba(28, 25, 23, 0.12);
+
     --d: #2563eb;
-    --e: #ea580c;
-    --off: #9ca3af;
-    --b-hrs: #16a34a;
+    --d-bg: #eff6ff;
+    --e: #d97706;
+    --e-bg: #fffbeb;
+    --off: #78716c;
+    --off-bg: #f5f5f4;
+    --b: #059669;
+    --b-bg: #ecfdf5;
+    --holiday: #dc2626;
+    --saturday: #2563eb;
     --memo: #f59e0b;
-    --selected: #dbeafe;
+
+    --radius: 14px;
+    --radius-sm: 10px;
+    --radius-xs: 6px;
+
+    --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.03);
+    --shadow-md: 0 1px 3px rgba(0,0,0,0.04), 0 6px 16px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 8px rgba(0,0,0,0.04), 0 16px 40px rgba(0,0,0,0.08);
+
+    --font: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Pretendard Mono", monospace;
   }
+
   * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-family: var(--font);
     background: var(--bg);
     color: var(--text);
     font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
   }
+  button, input, textarea { font-family: inherit; }
+
+  /* ============ Header ============ */
   header {
-    background: var(--card);
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .brand {
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
   }
-  header h1 {
-    margin: 0;
-    font-size: 18px;
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #1c1917 0%, #44403c 100%);
+    display: grid;
+    place-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.03em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .brand-info { display: flex; flex-direction: column; gap: 1px; }
+  .brand-row { display: flex; align-items: center; gap: 8px; }
+  .brand-title {
+    font-size: 15px;
     font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
   }
-  .nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
-  .nav button {
-    background: var(--card);
+  .brand-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--text-soft);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 6px 10px;
-    cursor: pointer;
-    font-size: 14px;
+    letter-spacing: 0.02em;
   }
-  .nav button:hover { background: #f3f4f6; }
-  .nav .label { font-weight: 600; min-width: 110px; text-align: center; }
 
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .nav-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    cursor: pointer;
+    font: inherit;
+    color: var(--text-soft);
+    transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    user-select: none;
+  }
+  .nav-btn:hover { background: var(--surface-2); color: var(--text); }
+  .nav-btn:active { transform: scale(0.97); }
+  .nav-btn.icon {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .nav-btn.primary {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    font-weight: 500;
+    box-shadow: var(--shadow-xs);
+  }
+  .nav-btn.primary:hover { background: #000; color: white; }
+  .nav-month {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    min-width: 132px;
+    text-align: center;
+    margin: 0 6px;
+    color: var(--text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ============ Container ============ */
   .container {
     display: grid;
-    grid-template-columns: 1fr 320px;
-    gap: 16px;
-    padding: 16px;
-    max-width: 1200px;
+    grid-template-columns: 1fr 340px;
+    gap: 20px;
+    padding: 24px 28px 12px;
+    max-width: 1280px;
     margin: 0 auto;
   }
-  @media (max-width: 900px) {
-    .container { grid-template-columns: 1fr; }
+  @media (max-width: 920px) {
+    .container { grid-template-columns: 1fr; padding: 16px; }
   }
 
+  /* ============ Calendar ============ */
   .cal {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: var(--radius);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
   }
   .cal-head, .cal-row {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
   }
   .cal-head {
-    background: #f3f4f6;
+    background: var(--surface-2);
     font-weight: 600;
     color: var(--muted);
-    font-size: 12px;
-  }
-  .cal-head div, .cal-cell {
-    padding: 8px;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    min-height: 90px;
-    cursor: pointer;
-    position: relative;
   }
-  .cal-head div { text-align: center; cursor: default; min-height: 0; padding: 8px 4px; }
-  .cal-head div:nth-child(1) { color: #dc2626; }
-  .cal-head div:nth-child(7) { color: #2563eb; }
+  .cal-head > div, .cal-cell { padding: 0; position: relative; }
+  .cal-head > div {
+    text-align: center;
+    padding: 11px 4px;
+  }
+  .cal-head > div.sun { color: var(--holiday); }
+  .cal-head > div.sat { color: var(--saturday); }
+
+  .cal-cell {
+    min-height: 112px;
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background 0.15s ease, transform 0.08s ease;
+  }
   .cal-cell:nth-child(7n) { border-right: none; }
-  .cal-cell.outside { background: #fafafa; cursor: default; }
-  .cal-cell.outside .day { opacity: 0.45; }
-  .cal-cell:hover:not(.outside) { background: #f9fafb; }
-  .cal-cell.selected { background: var(--selected) !important; }
+  .cal-cell:hover:not(.outside):not(.selected) { background: var(--surface-2); }
+  .cal-cell:active:not(.outside) { transform: scale(0.992); }
+
+  .cal-cell.outside { background: #fcfbf9; cursor: default; }
+  .cal-cell.outside > * { opacity: 0.32; }
+
+  .cal-cell.selected {
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 2px var(--accent);
+    z-index: 1;
+  }
+
+  .stripe-a, .stripe-b {
+    height: 3px;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease;
+  }
+  .stripe-a.D { background: var(--d); }
+  .stripe-a.E { background: var(--e); }
+  .stripe-a.OFF { background: var(--off); opacity: 0.5; }
+  .stripe-b { background: var(--b); }
+
+  .cell-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 11px 8px;
+    gap: 4px;
+    min-height: 0;
+  }
+  .day-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
   .cal-cell .day {
     font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 2px;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
   }
-  .cal-cell .day.sunday { color: #dc2626; }
-  .cal-cell .day.saturday { color: #2563eb; }
-  .cal-cell .day.holiday { color: #dc2626; }
+  .cal-cell .day.sun { color: var(--holiday); }
+  .cal-cell .day.sat { color: var(--saturday); }
+  .cal-cell .day.holiday { color: var(--holiday); }
+  .cal-cell .day.today-day { color: var(--accent); }
+  .cal-cell .day.sun.today-day,
+  .cal-cell .day.sat.today-day,
+  .cal-cell .day.holiday.today-day { color: var(--accent); }
+
+  .today-mark {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+    letter-spacing: 0;
+    margin-top: -2px;
+  }
+
   .holiday-name {
-    font-size: 10px;
-    color: #dc2626;
+    font-size: 10.5px;
+    color: var(--holiday);
     font-weight: 600;
-    line-height: 1.2;
-    margin-bottom: 4px;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .cal-cell.outside .holiday-name { opacity: 0.45; }
-  .badge {
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-right: 3px;
-    margin-top: 2px;
+
+  .schedules {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: flex-start;
   }
-  .badge.D { background: #dbeafe; color: var(--d); }
-  .badge.E { background: #ffedd5; color: var(--e); }
-  .badge.OFF { background: #f3f4f6; color: var(--off); }
-  .badge.hrs { background: #dcfce7; color: var(--b-hrs); }
+  .sched {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 10.5px;
+    font-weight: 600;
+    line-height: 1.4;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .sched.D { background: var(--d-bg); color: var(--d); }
+  .sched.E { background: var(--e-bg); color: var(--e); }
+  .sched.OFF { background: var(--off-bg); color: var(--off); }
+  .sched.B { background: var(--b-bg); color: var(--b); }
+
   .memo-dot {
     position: absolute;
-    top: 8px;
+    bottom: 8px;
     right: 8px;
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--memo);
+    box-shadow: 0 0 0 2px var(--surface);
   }
-  .today {
-    color: var(--accent);
-  }
+  .cal-cell.outside .memo-dot { box-shadow: 0 0 0 2px #fcfbf9; }
+  .cal-cell.selected .memo-dot { box-shadow: 0 0 0 2px var(--accent-soft); }
 
+  /* ============ Panel ============ */
   .panel {
-    background: var(--card);
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
+    border-radius: var(--radius);
+    padding: 20px;
     height: fit-content;
     position: sticky;
-    top: 16px;
+    top: 84px;
+    box-shadow: var(--shadow-sm);
+  }
+  .panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 4px;
   }
   .panel h2 {
-    margin: 0 0 4px 0;
+    margin: 0;
     font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .panel-date-badge {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    background: var(--surface-2);
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    font-weight: 500;
   }
   .panel .sub {
     color: var(--muted);
     font-size: 12px;
-    margin-bottom: 16px;
+    margin: 0 0 18px;
+    line-height: 1.5;
   }
-  .field { margin-bottom: 14px; }
-  .field label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    font-size: 12px;
+  .panel .sub.holiday {
+    color: var(--holiday);
+    font-weight: 500;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 28px 0 12px;
+  }
+  .empty-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 14px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: grid;
+    place-items: center;
+    color: var(--muted-2);
+  }
+  .empty-state .empty-text {
+    font-size: 13px;
     color: var(--muted);
+    line-height: 1.6;
   }
+  .empty-state .empty-hint {
+    font-size: 11px;
+    color: var(--muted-2);
+    margin-top: 4px;
+  }
+
+  .field { margin-bottom: 18px; }
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .field-label .role-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+  .field-label .role-dot.D { background: var(--d); }
+  .field-label .role-dot.E { background: var(--e); }
+  .field-label .role-dot.OFF { background: var(--off); }
+  .field-label .role-dot.B { background: var(--b); }
+
   .seg {
     display: flex;
-    gap: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    gap: 2px;
   }
   .seg button {
     flex: 1;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 7px;
+    padding: 8px 6px;
     cursor: pointer;
+    font: inherit;
     font-weight: 600;
+    color: var(--muted);
+    transition: all 0.18s ease;
+    font-size: 12.5px;
+    letter-spacing: 0.01em;
   }
-  .seg button.active.D { background: var(--d); color: white; border-color: var(--d); }
-  .seg button.active.E { background: var(--e); color: white; border-color: var(--e); }
-  .seg button.active.OFF { background: var(--off); color: white; border-color: var(--off); }
-  .seg button:hover:not(.active) { background: #f3f4f6; }
+  .seg button:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.04); }
+  .seg button.active { color: white; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+  .seg button.active.D { background: var(--d); }
+  .seg button.active.E { background: var(--e); }
+  .seg button.active.OFF { background: var(--off); }
+
   .row-2 { display: flex; gap: 8px; }
   .row-2 .field { flex: 1; }
+
   input[type="number"], textarea {
     width: 100%;
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px;
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
     font: inherit;
-    background: var(--card);
+    font-variant-numeric: tabular-nums;
+    background: var(--surface);
+    color: var(--text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
   input[type="number"]:focus, textarea:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-ring);
   }
-  textarea { min-height: 90px; resize: vertical; }
+  textarea {
+    min-height: 88px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] { -moz-appearance: textfield; }
+
   .save-status {
     font-size: 11px;
-    color: var(--muted);
     text-align: right;
-    margin-top: 6px;
-  }
-  .summary {
-    margin-top: 8px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-    font-size: 12px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
     color: var(--muted);
+    transition: color 0.2s ease;
   }
-  .summary strong { color: var(--text); }
-  .empty { color: var(--muted); font-size: 13px; }
+  .save-status.saving { color: var(--e); }
+  .save-status.saved { color: var(--b); }
+  .save-status .save-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .save-status.saving .save-dot { animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .summary {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .summary-block .summary-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .summary-title .role-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .summary-title .role-dot.A { background: linear-gradient(135deg, var(--d) 0%, var(--e) 100%); }
+  .summary-title .role-dot.B { background: var(--b); }
+  .summary-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .summary-stats.two { grid-template-columns: repeat(2, 1fr); }
+  .summary-stats.one { grid-template-columns: 1fr; }
+  .summary-stat {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .summary-stat .val {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .summary-stat .lbl {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .summary-stat .val .unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-left: 1px;
+  }
+
+  /* ============ Footer ============ */
+  footer {
+    text-align: center;
+    padding: 12px 24px 28px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .ver-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    font-weight: 500;
+    font-size: 12px;
+    box-shadow: var(--shadow-xs);
+  }
+  .ver-pill .ver-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--b);
+    box-shadow: 0 0 0 2px var(--b-bg);
+  }
+  .ver-pill .ver-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .ver-pill .ver-note { color: var(--muted); }
+
+  /* ============ Animations ============ */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(2px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .cal-cell { animation: fadeIn 0.2s ease both; }
+
+  /* ============ Mobile tweaks ============ */
+  @media (max-width: 920px) {
+    .cal-cell { min-height: 84px; }
+    .cell-body { padding: 8px 8px 6px; }
+    .cal-cell .day { font-size: 14px; }
+    .sched { font-size: 10px; padding: 1px 5px; }
+    .holiday-name { font-size: 9.5px; }
+    header { padding: 12px 16px; }
+    .brand-sub { display: none; }
+  }
+  @media (max-width: 520px) {
+    .cal-cell { min-height: 68px; }
+    .nav-month { min-width: 100px; font-size: 14px; }
+    .nav-btn.icon { width: 30px; height: 30px; font-size: 14px; }
+    .panel { position: static; }
+  }
 </style>
 </head>
 <body>
 <header>
-  <h1>스케줄 공유</h1>
-  <span class="muted" style="color:var(--muted); font-size:12px;">A: 간호사(D/E/) · B: 회사원(특근/잔업)</span>
+  <div class="brand">
+    <div class="brand-mark">S</div>
+    <div class="brand-info">
+      <div class="brand-row">
+        <span class="brand-title">스케줄 공유</span>
+        <span class="pill" id="versionPill">v0.0.1</span>
+      </div>
+      <div class="brand-sub">A · 간호사 (D/E/Off) &nbsp;·&nbsp; B · 회사원 (특근/잔업)</div>
+    </div>
+  </div>
   <div class="nav">
-    <button id="prev">‹ 이전</button>
-    <div class="label" id="monthLabel"></div>
-    <button id="next">다음 ›</button>
-    <button id="today">오늘</button>
+    <button class="nav-btn icon" id="prev" aria-label="이전 달">‹</button>
+    <div class="nav-month" id="monthLabel"></div>
+    <button class="nav-btn icon" id="next" aria-label="다음 달">›</button>
+    <button class="nav-btn primary" id="today">오늘</button>
   </div>
 </header>
+
 <div class="container">
   <div class="cal" id="cal">
     <div class="cal-head">
-      <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+      <div class="sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="sat">토</div>
     </div>
     <div id="calBody"></div>
   </div>
   <aside class="panel" id="panel">
-    <h2 id="panelTitle">날짜를 선택하세요</h2>
-    <div class="sub" id="panelSub">달력에서 날짜를 클릭해 편집</div>
-    <div id="panelForm" style="display:none;">
+    <div id="panelEmpty">
+      <div class="empty-state">
+        <div class="empty-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <div class="empty-text">달력에서 날짜를 클릭해<br>스케줄을 기록하세요</div>
+        <div class="empty-hint">A의 근무 · B의 시간 · 메모</div>
+      </div>
+    </div>
+    <div id="panelFilled" style="display:none;">
+      <div class="panel-head">
+        <h2 id="panelTitle"></h2>
+        <span class="panel-date-badge" id="panelDateBadge"></span>
+      </div>
+      <div class="sub" id="panelSub"></div>
       <div class="field">
-        <label>A (간호사) 근무 형태</label>
+        <div class="field-label"><span class="role-dot D"></span>A · 간호사 근무</div>
         <div class="seg" id="segA">
-          <button data-v="D">D (Day)</button>
-          <button data-v="E">E (Evening)</button>
-          <button data-v="/" data-label="OFF">/ (Off)</button>
+          <button data-v="D">D · Day</button>
+          <button data-v="E">E · Evening</button>
+          <button data-v="/">/ · Off</button>
         </div>
       </div>
       <div class="row-2">
         <div class="field">
-          <label>B 특근 (시간)</label>
+          <div class="field-label"><span class="role-dot B"></span>B 특근 (h)</div>
           <input type="number" id="bSpecial" min="0" step="0.5" placeholder="0">
         </div>
         <div class="field">
-          <label>B 잔업 (시간)</label>
+          <div class="field-label"><span class="role-dot B"></span>B 잔업 (h)</div>
           <input type="number" id="bOvertime" min="0" step="0.5" placeholder="0">
         </div>
       </div>
       <div class="field">
-        <label>메모</label>
+        <div class="field-label">메모</div>
         <textarea id="memo" placeholder="이 날에 남길 메모..."></textarea>
       </div>
-      <div class="save-status" id="saveStatus">저장됨</div>
+      <div class="save-status" id="saveStatus"><span class="save-dot"></span><span id="saveStatusText">저장됨</span></div>
     </div>
     <div class="summary" id="summary"></div>
   </aside>
 </div>
-<footer style="text-align:center; padding:14px; color:var(--muted); font-size:12px; border-top:1px solid var(--border); margin-top:8px;">
-  <strong style="color:var(--text);">V0.0.1</strong> · 초기 릴리스
+
+<footer>
+  <div class="ver-pill">
+    <span class="ver-dot"></span>
+    <span class="ver-tag" id="verTag">v0.0.1</span>
+    <span class="ver-note">· UI 리디자인</span>
+  </div>
 </footer>
 
 <script>
+const APP_VERSION = 'v0.1.0';
+
 const state = {
   year: 0, month: 0,
   a: {}, b: {}, messages: {},
   selected: null,
 };
+
+document.getElementById('versionPill').textContent = APP_VERSION;
+document.getElementById('verTag').textContent = APP_VERSION;
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => Array.from(document.querySelectorAll(s));
@@ -298,12 +751,12 @@ async function loadAll() {
 }
 
 function pad(n) { return String(n).padStart(2, '0'); }
-function key(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}` }
-function keyMonth(y, m) { return `${y}-${pad(m+1)}` }
-function parseKey(k) { const [y, m, d] = k.split('-').map(Number); return { y, m: m-1, d } }
+function key(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}`; }
+function keyMonth(y, m) { return `${y}-${pad(m+1)}`; }
+function parseKey(k) { const [y, m, d] = k.split('-').map(Number); return { y, m: m-1, d }; }
 
 function daysInMonth(y, m) { return new Date(y, m+1, 0).getDate(); }
-function firstWeekday(y, m) { return new Date(y, m, 1).getDay() }
+function firstWeekday(y, m) { return new Date(y, m, 1).getDay(); }
 
 const HOLIDAYS = {
   2024: [
@@ -412,45 +865,70 @@ function renderCalendar() {
       const cell = document.createElement('div');
       cell.className = 'cal-cell' + (c.outside ? ' outside' : '');
       const k = key(c.y, c.m, c.d);
-      if (k === todayKey) cell.classList.add('today');
+      const isToday = k === todayKey;
+      if (isToday) cell.classList.add('today');
       if (k === state.selected) cell.classList.add('selected');
 
       const dow = new Date(c.y, c.m, c.d).getDay();
       const holidays = getHolidayNames(c.y, c.m, c.d);
+      const a = state.a[k];
+      const bData = state.b[k];
+      const bHas = bData && ((+bData.special) > 0 || (+bData.overtime) > 0);
 
+      if (!c.outside && (a === 'D' || a === 'E' || a === '/')) {
+        const s = document.createElement('div');
+        s.className = 'stripe-a ' + a;
+        cell.appendChild(s);
+      }
+      if (!c.outside && bHas) {
+        const s = document.createElement('div');
+        s.className = 'stripe-b';
+        cell.appendChild(s);
+      }
+
+      const cb = document.createElement('div');
+      cb.className = 'cell-body';
+      cell.appendChild(cb);
+
+      const dayRow = document.createElement('div');
+      dayRow.className = 'day-row';
       const day = document.createElement('div');
       day.className = 'day';
       if (holidays.length) day.classList.add('holiday');
-      else if (dow === 0) day.classList.add('sunday');
-      else if (dow === 6) day.classList.add('saturday');
+      else if (dow === 0) day.classList.add('sun');
+      else if (dow === 6) day.classList.add('sat');
+      if (isToday) day.classList.add('today-day');
       day.textContent = c.d;
-      cell.appendChild(day);
+      dayRow.appendChild(day);
+      cb.appendChild(dayRow);
 
       if (holidays.length) {
         const h = document.createElement('div');
         h.className = 'holiday-name';
         h.textContent = holidays.join(' · ');
         h.title = holidays.join(', ');
-        cell.appendChild(h);
+        cb.appendChild(h);
       }
 
       if (!c.outside) {
-        const a = state.a[k];
+        const schedules = document.createElement('div');
+        schedules.className = 'schedules';
         if (a === 'D' || a === 'E' || a === '/') {
-          const b = document.createElement('span');
-          b.className = 'badge ' + (a === '/' ? 'OFF' : a);
-          b.textContent = a === '/' ? 'OFF' : a;
-          cell.appendChild(b);
+          const sched = document.createElement('span');
+          sched.className = 'sched ' + (a === '/' ? 'OFF' : a);
+          sched.textContent = a === '/' ? 'OFF' : a;
+          schedules.appendChild(sched);
         }
-        const bData = state.b[k];
-        if (bData && ((+bData.special) > 0 || (+bData.overtime) > 0)) {
+        if (bHas) {
           const sp = +bData.special || 0;
           const ot = +bData.overtime || 0;
-          const b = document.createElement('span');
-          b.className = 'badge hrs';
-          b.textContent = `B ${sp + ot}h`;
-          cell.appendChild(b);
+          const sched = document.createElement('span');
+          sched.className = 'sched B';
+          sched.textContent = `${sp + ot}h`;
+          schedules.appendChild(sched);
         }
+        if (schedules.childElementCount > 0) cb.appendChild(schedules);
+
         if (state.messages[k] && state.messages[k].trim()) {
           const dot = document.createElement('div');
           dot.className = 'memo-dot';
@@ -466,6 +944,10 @@ function renderCalendar() {
   }
 
   renderSummary();
+}
+
+function stat(val, lbl, unit = '') {
+  return `<div class="summary-stat"><span class="val">${val}${unit ? `<span class="unit">${unit}</span>` : ''}</span><span class="lbl">${lbl}</span></div>`;
 }
 
 function renderSummary() {
@@ -485,13 +967,46 @@ function renderSummary() {
   for (const k in state.messages) {
     if (k.startsWith(km) && state.messages[k] && state.messages[k].trim()) memoCount++;
   }
-  $('#summary').innerHTML =
-    `<div style="margin-bottom:6px;"><strong>A (간호사)</strong></div>` +
-    `D ${dCount}일 · E ${eCount}일 · OFF ${offCount}일` +
-    `<div style="margin:10px 0 6px;"><strong>B (회사원)</strong></div>` +
-    `특근 ${specialSum}h · 잔업 ${overtimeSum}h` +
-    `<div style="margin:10px 0 6px;"><strong>메모</strong></div>` +
-    `${memoCount}개`;
+  $('#summary').innerHTML = `
+    <div class="summary-block">
+      <div class="summary-title"><span class="role-dot A"></span>A · 간호사</div>
+      <div class="summary-stats">
+        ${stat(dCount, 'D')}
+        ${stat(eCount, 'E')}
+        ${stat(offCount, 'Off')}
+      </div>
+    </div>
+    <div class="summary-block">
+      <div class="summary-title"><span class="role-dot B"></span>B · 회사원</div>
+      <div class="summary-stats two">
+        ${stat(specialSum, '특근', 'h')}
+        ${stat(overtimeSum, '잔업', 'h')}
+      </div>
+    </div>
+    <div class="summary-block">
+      <div class="summary-title">메모</div>
+      <div class="summary-stats one">
+        ${stat(memoCount, memoCount === 1 ? '개' : '개')}
+      </div>
+    </div>
+  `;
+}
+
+function setSaveStatus(state, text) {
+  const el = $('#saveStatus');
+  el.classList.remove('saving', 'saved');
+  if (state) el.classList.add(state);
+  $('#saveStatusText').textContent = text;
+}
+
+function showEmpty() {
+  $('#panelEmpty').style.display = '';
+  $('#panelFilled').style.display = 'none';
+}
+
+function showFilled() {
+  $('#panelEmpty').style.display = 'none';
+  $('#panelFilled').style.display = '';
 }
 
 function selectDate(k) {
@@ -499,13 +1014,12 @@ function selectDate(k) {
   const { y, m, d } = parseKey(k);
   const dt = new Date(y, m, d);
   const wk = ['일','월','화','수','목','금','토'][dt.getDay()];
-  $('#panelTitle').textContent = `${y}년 ${m+1}월 ${d}일 (${wk})`;
+  $('#panelTitle').textContent = `${m+1}월 ${d}일`;
+  $('#panelDateBadge').textContent = `${wk}요일`;
   const holidays = getHolidayNames(y, m, d);
-  $('#panelSub').textContent = holidays.length
-    ? '공휴일: ' + holidays.join(', ')
-    : '';
-  $('#panelSub').style.color = holidays.length ? '#dc2626' : '';
-  $('#panelForm').style.display = 'block';
+  $('#panelSub').textContent = holidays.length ? '공휴일 · ' + holidays.join(', ') : '선택한 날짜의 스케줄을 편집하세요';
+  $('#panelSub').classList.toggle('holiday', holidays.length > 0);
+  showFilled();
 
   $$('#segA button').forEach(btn => btn.classList.remove('active', 'D', 'E', 'OFF'));
   const av = state.a[k];
@@ -516,13 +1030,14 @@ function selectDate(k) {
   $('#bSpecial').value = (state.b[k] && state.b[k].special) || '';
   $('#bOvertime').value = (state.b[k] && state.b[k].overtime) || '';
   $('#memo').value = state.messages[k] || '';
+  setSaveStatus('saved', '저장됨');
 
   renderCalendar();
 }
 
 let saveTimer = null;
 function scheduleSave() {
-  $('#saveStatus').textContent = '저장 중...';
+  setSaveStatus('saving', '저장 중...');
   clearTimeout(saveTimer);
   saveTimer = setTimeout(save, 400);
 }
@@ -548,10 +1063,10 @@ async function save() {
       api('PUT', '/api/b', state.b),
       api('PUT', '/api/messages', state.messages),
     ]);
-    $('#saveStatus').textContent = '저장됨';
+    setSaveStatus('saved', '저장됨');
     renderCalendar();
   } catch (e) {
-    $('#saveStatus').textContent = '저장 실패: ' + e.message;
+    setSaveStatus(null, '저장 실패: ' + e.message);
   }
 }
 
@@ -566,33 +1081,29 @@ $('#segA').addEventListener('click', (e) => {
   $('#' + id).addEventListener('input', scheduleSave);
 });
 
-$('#prev').addEventListener('click', () => {
-  state.month--;
-  if (state.month < 0) { state.month = 11; state.year--; }
+function navigate(direction) {
+  if (direction === 'today') {
+    const t = new Date();
+    state.year = t.getFullYear();
+    state.month = t.getMonth();
+  } else {
+    state.month += direction;
+    if (state.month > 11) { state.month = 0; state.year++; }
+    if (state.month < 0) { state.month = 11; state.year--; }
+  }
   state.selected = null;
-  $('#panelForm').style.display = 'none';
-  $('#panelTitle').textContent = '날짜를 선택하세요';
-  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
+  showEmpty();
   renderCalendar();
-});
-$('#next').addEventListener('click', () => {
-  state.month++;
-  if (state.month > 11) { state.month = 0; state.year++; }
-  state.selected = null;
-  $('#panelForm').style.display = 'none';
-  $('#panelTitle').textContent = '날짜를 선택하세요';
-  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
-  renderCalendar();
-});
-$('#today').addEventListener('click', () => {
-  const t = new Date();
-  state.year = t.getFullYear();
-  state.month = t.getMonth();
-  state.selected = null;
-  $('#panelForm').style.display = 'none';
-  $('#panelTitle').textContent = '날짜를 선택하세요';
-  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
-  renderCalendar();
+}
+$('#prev').addEventListener('click', () => navigate(-1));
+$('#next').addEventListener('click', () => navigate(1));
+$('#today').addEventListener('click', () => navigate('today'));
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.key === 'ArrowLeft') navigate(-1);
+  else if (e.key === 'ArrowRight') navigate(1);
+  else if (e.key === 't' || e.key === 'T') navigate('today');
 });
 
 (async function init() {
