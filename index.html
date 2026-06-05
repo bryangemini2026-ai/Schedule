@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스케줄 공유</title>
+<style>
+  :root {
+    --bg: #f7f7f8;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --text: #111827;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --d: #2563eb;
+    --e: #ea580c;
+    --off: #9ca3af;
+    --b-hrs: #16a34a;
+    --memo: #f59e0b;
+    --selected: #dbeafe;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+  }
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+  .nav button {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .nav button:hover { background: #f3f4f6; }
+  .nav .label { font-weight: 600; min-width: 110px; text-align: center; }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 16px;
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) {
+    .container { grid-template-columns: 1fr; }
+  }
+
+  .cal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .cal-head, .cal-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .cal-head {
+    background: #f3f4f6;
+    font-weight: 600;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .cal-head div, .cal-cell {
+    padding: 8px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    min-height: 90px;
+    cursor: pointer;
+    position: relative;
+  }
+  .cal-head div { text-align: center; cursor: default; min-height: 0; padding: 8px 4px; }
+  .cal-head div:nth-child(1) { color: #dc2626; }
+  .cal-head div:nth-child(7) { color: #2563eb; }
+  .cal-cell:nth-child(7n) { border-right: none; }
+  .cal-cell.outside { background: #fafafa; cursor: default; }
+  .cal-cell.outside .day { opacity: 0.45; }
+  .cal-cell:hover:not(.outside) { background: #f9fafb; }
+  .cal-cell.selected { background: var(--selected) !important; }
+  .cal-cell .day {
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 2px;
+  }
+  .cal-cell .day.sunday { color: #dc2626; }
+  .cal-cell .day.saturday { color: #2563eb; }
+  .cal-cell .day.holiday { color: #dc2626; }
+  .holiday-name {
+    font-size: 10px;
+    color: #dc2626;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .cal-cell.outside .holiday-name { opacity: 0.45; }
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 3px;
+    margin-top: 2px;
+  }
+  .badge.D { background: #dbeafe; color: var(--d); }
+  .badge.E { background: #ffedd5; color: var(--e); }
+  .badge.OFF { background: #f3f4f6; color: var(--off); }
+  .badge.hrs { background: #dcfce7; color: var(--b-hrs); }
+  .memo-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--memo);
+  }
+  .today {
+    color: var(--accent);
+  }
+
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    height: fit-content;
+    position: sticky;
+    top: 16px;
+  }
+  .panel h2 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+  }
+  .panel .sub {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+  .field { margin-bottom: 14px; }
+  .field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .seg {
+    display: flex;
+    gap: 4px;
+  }
+  .seg button {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .seg button.active.D { background: var(--d); color: white; border-color: var(--d); }
+  .seg button.active.E { background: var(--e); color: white; border-color: var(--e); }
+  .seg button.active.OFF { background: var(--off); color: white; border-color: var(--off); }
+  .seg button:hover:not(.active) { background: #f3f4f6; }
+  .row-2 { display: flex; gap: 8px; }
+  .row-2 .field { flex: 1; }
+  input[type="number"], textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px;
+    font: inherit;
+    background: var(--card);
+  }
+  input[type="number"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  textarea { min-height: 90px; resize: vertical; }
+  .save-status {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 6px;
+  }
+  .summary {
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .summary strong { color: var(--text); }
+  .empty { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>스케줄 공유</h1>
+  <span class="muted" style="color:var(--muted); font-size:12px;">A: 간호사(D/E/) · B: 회사원(특근/잔업)</span>
+  <div class="nav">
+    <button id="prev">‹ 이전</button>
+    <div class="label" id="monthLabel"></div>
+    <button id="next">다음 ›</button>
+    <button id="today">오늘</button>
+  </div>
+</header>
+<div class="container">
+  <div class="cal" id="cal">
+    <div class="cal-head">
+      <div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+    </div>
+    <div id="calBody"></div>
+  </div>
+  <aside class="panel" id="panel">
+    <h2 id="panelTitle">날짜를 선택하세요</h2>
+    <div class="sub" id="panelSub">달력에서 날짜를 클릭해 편집</div>
+    <div id="panelForm" style="display:none;">
+      <div class="field">
+        <label>A (간호사) 근무 형태</label>
+        <div class="seg" id="segA">
+          <button data-v="D">D (Day)</button>
+          <button data-v="E">E (Evening)</button>
+          <button data-v="/" data-label="OFF">/ (Off)</button>
+        </div>
+      </div>
+      <div class="row-2">
+        <div class="field">
+          <label>B 특근 (시간)</label>
+          <input type="number" id="bSpecial" min="0" step="0.5" placeholder="0">
+        </div>
+        <div class="field">
+          <label>B 잔업 (시간)</label>
+          <input type="number" id="bOvertime" min="0" step="0.5" placeholder="0">
+        </div>
+      </div>
+      <div class="field">
+        <label>메모</label>
+        <textarea id="memo" placeholder="이 날에 남길 메모..."></textarea>
+      </div>
+      <div class="save-status" id="saveStatus">저장됨</div>
+    </div>
+    <div class="summary" id="summary"></div>
+  </aside>
+</div>
+<footer style="text-align:center; padding:14px; color:var(--muted); font-size:12px; border-top:1px solid var(--border); margin-top:8px;">
+  <strong style="color:var(--text);">V0.0.1</strong> · 초기 릴리스
+</footer>
+
+<script>
+const state = {
+  year: 0, month: 0,
+  a: {}, b: {}, messages: {},
+  selected: null,
+};
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+async function api(method, path, body) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const r = await fetch(path, opts);
+  if (!r.ok) throw new Error(await r.text());
+  return r.json();
+}
+
+async function loadAll() {
+  const [a, b, messages] = await Promise.all([
+    api('GET', '/api/a'),
+    api('GET', '/api/b'),
+    api('GET', '/api/messages'),
+  ]);
+  state.a = a; state.b = b; state.messages = messages;
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+function key(y, m, d) { return `${y}-${pad(m+1)}-${pad(d)}` }
+function keyMonth(y, m) { return `${y}-${pad(m+1)}` }
+function parseKey(k) { const [y, m, d] = k.split('-').map(Number); return { y, m: m-1, d } }
+
+function daysInMonth(y, m) { return new Date(y, m+1, 0).getDate(); }
+function firstWeekday(y, m) { return new Date(y, m, 1).getDay() }
+
+const HOLIDAYS = {
+  2024: [
+    ['01-01','신정'],
+    ['02-09','설날'],['02-10','설날'],['02-11','설날'],['02-12','설날 대체'],
+    ['03-01','3·1절'],
+    ['05-05','어린이날'],['05-06','어린이날 대체'],
+    ['05-15','부처님오신날'],
+    ['06-06','현충일'],
+    ['08-15','광복절'],
+    ['09-16','추석'],['09-17','추석'],['09-18','추석'],
+    ['10-03','개천절'],
+    ['10-09','한글날'],
+    ['12-25','성탄절'],
+  ],
+  2025: [
+    ['01-01','신정'],
+    ['01-28','설날'],['01-29','설날'],['01-30','설날'],
+    ['03-01','3·1절'],
+    ['05-05','어린이날'],['05-05','부처님오신날'],['05-06','대체공휴일'],
+    ['06-06','현충일'],
+    ['08-15','광복절'],
+    ['10-03','개천절'],
+    ['10-06','추석'],['10-07','추석'],['10-08','추석'],
+    ['10-09','한글날'],
+    ['12-25','성탄절'],
+  ],
+  2026: [
+    ['01-01','신정'],
+    ['02-16','설날'],['02-17','설날'],['02-18','설날'],
+    ['03-01','3·1절'],['03-02','3·1절 대체'],
+    ['05-05','어린이날'],
+    ['05-24','부처님오신날'],['05-25','부처님오신날 대체'],
+    ['06-06','현충일'],
+    ['08-15','광복절'],['08-17','광복절 대체'],
+    ['09-24','추석'],['09-25','추석'],['09-26','추석'],
+    ['10-03','개천절'],['10-05','개천절 대체'],
+    ['10-09','한글날'],
+    ['12-25','성탄절'],
+  ],
+  2027: [
+    ['01-01','신정'],
+    ['02-05','설날'],['02-06','설날'],['02-07','설날'],['02-08','설날 대체'],
+    ['03-01','3·1절'],
+    ['05-05','어린이날'],
+    ['05-13','부처님오신날'],
+    ['06-06','현충일'],['06-07','현충일 대체'],
+    ['08-15','광복절'],['08-16','광복절 대체'],
+    ['09-15','추석'],['09-16','추석'],['09-17','추석'],
+    ['10-03','개천절'],['10-04','개천절 대체'],
+    ['10-09','한글날'],
+    ['12-25','성탄절'],
+  ],
+  2028: [
+    ['01-01','신정'],
+    ['01-26','설날'],['01-27','설날'],['01-28','설날'],
+    ['03-01','3·1절'],
+    ['05-02','부처님오신날'],
+    ['05-05','어린이날'],
+    ['06-06','현충일'],
+    ['08-15','광복절'],
+    ['10-03','개천절'],
+    ['10-04','추석'],['10-05','추석'],['10-06','추석'],
+    ['10-09','한글날'],
+    ['12-25','성탄절'],
+  ],
+};
+
+function getHolidayNames(y, m, d) {
+  const list = HOLIDAYS[y];
+  if (!list) return [];
+  const k = pad(m+1) + '-' + pad(d);
+  return list.filter(([hk]) => hk === k).map(([, name]) => name);
+}
+
+function renderCalendar() {
+  $('#monthLabel').textContent = `${state.year}년 ${state.month+1}월`;
+  const body = $('#calBody');
+  body.innerHTML = '';
+  const first = firstWeekday(state.year, state.month);
+  const total = daysInMonth(state.year, state.month);
+  const prevTotal = daysInMonth(state.year, state.month - 1);
+  const cells = [];
+
+  for (let i = 0; i < first; i++) {
+    const d = prevTotal - first + i + 1;
+    const m = state.month - 1;
+    const y = m < 0 ? state.year - 1 : state.year;
+    cells.push({ y, m: (m + 12) % 12, d, outside: true });
+  }
+  for (let d = 1; d <= total; d++) cells.push({ y: state.year, m: state.month, d, outside: false });
+  while (cells.length % 7 !== 0) {
+    const last = cells[cells.length - 1];
+    const next = parseKey(key(last.y, last.m, last.d + 1));
+    cells.push({ ...next, outside: true });
+  }
+
+  const today = new Date();
+  const todayKey = key(today.getFullYear(), today.getMonth(), today.getDate());
+
+  for (let i = 0; i < cells.length; i += 7) {
+    const row = document.createElement('div');
+    row.className = 'cal-row';
+    for (let j = 0; j < 7; j++) {
+      const c = cells[i + j];
+      const cell = document.createElement('div');
+      cell.className = 'cal-cell' + (c.outside ? ' outside' : '');
+      const k = key(c.y, c.m, c.d);
+      if (k === todayKey) cell.classList.add('today');
+      if (k === state.selected) cell.classList.add('selected');
+
+      const dow = new Date(c.y, c.m, c.d).getDay();
+      const holidays = getHolidayNames(c.y, c.m, c.d);
+
+      const day = document.createElement('div');
+      day.className = 'day';
+      if (holidays.length) day.classList.add('holiday');
+      else if (dow === 0) day.classList.add('sunday');
+      else if (dow === 6) day.classList.add('saturday');
+      day.textContent = c.d;
+      cell.appendChild(day);
+
+      if (holidays.length) {
+        const h = document.createElement('div');
+        h.className = 'holiday-name';
+        h.textContent = holidays.join(' · ');
+        h.title = holidays.join(', ');
+        cell.appendChild(h);
+      }
+
+      if (!c.outside) {
+        const a = state.a[k];
+        if (a === 'D' || a === 'E' || a === '/') {
+          const b = document.createElement('span');
+          b.className = 'badge ' + (a === '/' ? 'OFF' : a);
+          b.textContent = a === '/' ? 'OFF' : a;
+          cell.appendChild(b);
+        }
+        const bData = state.b[k];
+        if (bData && ((+bData.special) > 0 || (+bData.overtime) > 0)) {
+          const sp = +bData.special || 0;
+          const ot = +bData.overtime || 0;
+          const b = document.createElement('span');
+          b.className = 'badge hrs';
+          b.textContent = `B ${sp + ot}h`;
+          cell.appendChild(b);
+        }
+        if (state.messages[k] && state.messages[k].trim()) {
+          const dot = document.createElement('div');
+          dot.className = 'memo-dot';
+          dot.title = state.messages[k];
+          cell.appendChild(dot);
+        }
+        cell.addEventListener('click', () => selectDate(k));
+      }
+
+      row.appendChild(cell);
+    }
+    body.appendChild(row);
+  }
+
+  renderSummary();
+}
+
+function renderSummary() {
+  const km = keyMonth(state.year, state.month);
+  let dCount = 0, eCount = 0, offCount = 0, specialSum = 0, overtimeSum = 0, memoCount = 0;
+  for (const k in state.a) {
+    if (!k.startsWith(km)) continue;
+    if (state.a[k] === 'D') dCount++;
+    else if (state.a[k] === 'E') eCount++;
+    else if (state.a[k] === '/') offCount++;
+  }
+  for (const k in state.b) {
+    if (!k.startsWith(km)) continue;
+    specialSum += +state.b[k].special || 0;
+    overtimeSum += +state.b[k].overtime || 0;
+  }
+  for (const k in state.messages) {
+    if (k.startsWith(km) && state.messages[k] && state.messages[k].trim()) memoCount++;
+  }
+  $('#summary').innerHTML =
+    `<div style="margin-bottom:6px;"><strong>A (간호사)</strong></div>` +
+    `D ${dCount}일 · E ${eCount}일 · OFF ${offCount}일` +
+    `<div style="margin:10px 0 6px;"><strong>B (회사원)</strong></div>` +
+    `특근 ${specialSum}h · 잔업 ${overtimeSum}h` +
+    `<div style="margin:10px 0 6px;"><strong>메모</strong></div>` +
+    `${memoCount}개`;
+}
+
+function selectDate(k) {
+  state.selected = k;
+  const { y, m, d } = parseKey(k);
+  const dt = new Date(y, m, d);
+  const wk = ['일','월','화','수','목','금','토'][dt.getDay()];
+  $('#panelTitle').textContent = `${y}년 ${m+1}월 ${d}일 (${wk})`;
+  const holidays = getHolidayNames(y, m, d);
+  $('#panelSub').textContent = holidays.length
+    ? '공휴일: ' + holidays.join(', ')
+    : '';
+  $('#panelSub').style.color = holidays.length ? '#dc2626' : '';
+  $('#panelForm').style.display = 'block';
+
+  $$('#segA button').forEach(btn => btn.classList.remove('active', 'D', 'E', 'OFF'));
+  const av = state.a[k];
+  if (av) {
+    const btn = $(`#segA button[data-v="${av}"]`);
+    if (btn) btn.classList.add('active', av === '/' ? 'OFF' : av);
+  }
+  $('#bSpecial').value = (state.b[k] && state.b[k].special) || '';
+  $('#bOvertime').value = (state.b[k] && state.b[k].overtime) || '';
+  $('#memo').value = state.messages[k] || '';
+
+  renderCalendar();
+}
+
+let saveTimer = null;
+function scheduleSave() {
+  $('#saveStatus').textContent = '저장 중...';
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(save, 400);
+}
+
+async function save() {
+  if (!state.selected) return;
+  const k = state.selected;
+  const active = $('#segA button.active');
+  const av = active ? active.dataset.v : null;
+  const sp = $('#bSpecial').value;
+  const ot = $('#bOvertime').value;
+  const memo = $('#memo').value;
+
+  if (av) state.a[k] = av; else delete state.a[k];
+  if (sp || ot) state.b[k] = { special: sp ? +sp : 0, overtime: ot ? +ot : 0 };
+  else delete state.b[k];
+  if (memo && memo.trim()) state.messages[k] = memo;
+  else delete state.messages[k];
+
+  try {
+    await Promise.all([
+      api('PUT', '/api/a', state.a),
+      api('PUT', '/api/b', state.b),
+      api('PUT', '/api/messages', state.messages),
+    ]);
+    $('#saveStatus').textContent = '저장됨';
+    renderCalendar();
+  } catch (e) {
+    $('#saveStatus').textContent = '저장 실패: ' + e.message;
+  }
+}
+
+$('#segA').addEventListener('click', (e) => {
+  if (e.target.tagName !== 'BUTTON') return;
+  const v = e.target.dataset.v;
+  $$('#segA button').forEach(b => b.classList.remove('active', 'D', 'E', 'OFF'));
+  e.target.classList.add('active', v === '/' ? 'OFF' : v);
+  scheduleSave();
+});
+['bSpecial', 'bOvertime', 'memo'].forEach(id => {
+  $('#' + id).addEventListener('input', scheduleSave);
+});
+
+$('#prev').addEventListener('click', () => {
+  state.month--;
+  if (state.month < 0) { state.month = 11; state.year--; }
+  state.selected = null;
+  $('#panelForm').style.display = 'none';
+  $('#panelTitle').textContent = '날짜를 선택하세요';
+  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
+  renderCalendar();
+});
+$('#next').addEventListener('click', () => {
+  state.month++;
+  if (state.month > 11) { state.month = 0; state.year++; }
+  state.selected = null;
+  $('#panelForm').style.display = 'none';
+  $('#panelTitle').textContent = '날짜를 선택하세요';
+  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
+  renderCalendar();
+});
+$('#today').addEventListener('click', () => {
+  const t = new Date();
+  state.year = t.getFullYear();
+  state.month = t.getMonth();
+  state.selected = null;
+  $('#panelForm').style.display = 'none';
+  $('#panelTitle').textContent = '날짜를 선택하세요';
+  $('#panelSub').textContent = '달력에서 날짜를 클릭해 편집';
+  renderCalendar();
+});
+
+(async function init() {
+  const t = new Date();
+  state.year = t.getFullYear();
+  state.month = t.getMonth();
+  await loadAll();
+  renderCalendar();
+})();
+</script>
+</body>
+</html>
